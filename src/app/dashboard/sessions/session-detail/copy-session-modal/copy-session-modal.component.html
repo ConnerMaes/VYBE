@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <h2 mat-dialog-title>Sessie kopiëren</h2>
+  <mat-dialog-content>Geef een naam in voor de nieuwe gekopiëerde sessie.</mat-dialog-content>
+  <br>
+  <mat-form-field style="width: 100%">
+    <input matInput placeholder="Name" ngModel name="name">
+  </mat-form-field>
+  <br>
+  <mat-checkbox ngModel name="copyResearchers">Volgers onthouden</mat-checkbox>
+  <br>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Annuleren</button>
+    <button mat-button type="submit">Kopiëren</button>
+  </mat-dialog-actions>
+</form>

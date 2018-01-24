@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <h2 mat-dialog-title>Sessie verwijderen</h2>
+  <mat-dialog-content>Bent u zeker dat u deze sessie wilt verwijderen?</mat-dialog-content>
+  <br>
+  <mat-dialog-content>Als u deze sessie verwijderd zullen alle antwoorden die aan deze sessie gelinkt zijn ook verwijderd worden.</mat-dialog-content>
+  <br>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Annuleren</button>
+    <button mat-button type="submit">Verijwderen</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,40 @@
+<div *ngIf="loaded">
+  <h2>{{subject.firstName}} {{subject.lastName}}</h2>
+  <p>email adres: {{subject.email}}</p>
+  <p>Geboorte datum: {{subject.birthDate}}</p>
+  <p>Ziekte: {{subject.illness}}</p>
+  <br>
+  <div *ngIf="displayQuestions.length > 0">
+    <mat-form-field>
+      <mat-select placeholder="Select session" [(value)]="selectedSession" (change)="onChange($event)">
+        <mat-option value="all">Alle sessies</mat-option>
+        <mat-option *ngFor="let session of sessions" [value]="session.sessionID">
+          {{session.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button *ngIf="selectedSession!=='all'" (click)="onGoToSession()">
+      <span>Naar sessie</span>
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <br>
+    <button mat-button (click)="getCSV()" [disabled]="CSVDisabled()" *ngIf="displayQuestions.length > 0">
+      <mat-icon>file_download</mat-icon>
+      <a>Download CSV File</a>
+    </button>
+    <br>
+    <br>
+    <div *ngFor="let question of displayQuestions">
+      <h4>{{question.questionText}}</h4>
+      <p *ngFor="let answer of question.answers">
+        {{answer.answerPercentage}}% <span style="color: gray; margin-left: 30px;">({{answer.answerDate}})</span> {{answer.sessionId}}
+      </p>
+      <br>
+    </div>
+  </div>
+  <p *ngIf="displayQuestions.length == 0" class="info">De deelnemer heeft momenteel nog geen vragen beantwoord.</p>
+</div>
+<app-not-found *ngIf="notFoundError"></app-not-found>
+
+
+

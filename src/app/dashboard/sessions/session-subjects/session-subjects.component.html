@@ -1,0 +1,26 @@
+<div *ngIf="loaded && !sessionNotFoundError">
+  <h1>{{session.name}} <span style="color: gray; font-size: small; margin-left: 50px; margin-bottom: 5px" *ngIf="!session.isConcept">{{session.startDate}}</span></h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Illness</th>
+      <th>Birth date</th>
+      <th></th>
+    </tr>
+    <br>
+    <tr *ngFor="let subject of displaySubjects" (click)="selectSubject(subject)">
+      <td>{{subject.firstName}} {{subject.lastName}}</td>
+      <td>{{subject.illness}}</td>
+      <td>{{subject.birthDate}}</td>
+      <td><mat-icon>chevron_right</mat-icon></td>
+    </tr>
+  </table>
+  <br>
+  <br>
+  <button mat-button (click)="toSessionDetails()"><mat-icon>arrow_back</mat-icon> Back to session details</button>
+</div>
+
+<div *ngIf="sessionNotFoundError" style="text-align: center">
+  <h2 style="color:gray;">Session does not exist</h2>
+</div>
+

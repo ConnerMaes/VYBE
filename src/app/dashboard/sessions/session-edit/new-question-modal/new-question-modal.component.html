@@ -1,0 +1,18 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <h2 mat-dialog-title>Nieuwe vraag</h2>
+  <mat-dialog-content>Vul de vraag en de bovenste en onderste waarden in om een nieuwe vraag aan te maken.</mat-dialog-content>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Vraag" ngModel name="questionText">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Hoogste waarde" ngModel name="upperValue">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Laagste waarde" ngModel name="lowerValue">
+  </mat-form-field>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Annuleren</button>
+    <button mat-button type="submit">Toevoegen</button>
+  </mat-dialog-actions>
+</form>

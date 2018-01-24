@@ -1,0 +1,35 @@
+<h1>Welkom, {{currentUserName}}</h1>
+<br>
+<div class="shortcut-holder">
+  <div class="shortcut">
+    <img src="../../../assets/session_figure.png" alt="add" style="width: 75%; margin-top: 15px">
+    <div class="content">
+      <h2>Sessies</h2>
+      <p>
+        <span *ngIf="openSessionCount!==1">
+          Er is momenteel {{openSessionCount}} sessie
+        </span>
+        <span *ngIf="openSessionCount==1">
+          Er is momenteel {{openSessionCount}} sessie
+        </span>
+         actief. Gebruikers kunnen hier aan deelnemen zolang ze actief zijn.</p>
+      <button mat-button routerLink="/dashboard/sessions">Ga naar sessies</button>
+    </div>
+  </div>
+  <div class="shortcut">
+    <img src="../../../assets/add_figure.png" alt="add" style="width: 75%; margin-top: 15px">
+    <div class="content">
+      <h2>Nieuwe sessie</h2>
+      <p>Maak een nieuwe sessie aan om gebruikers te volgen. Kies vragen en voeg onderzoekers toe.</p>
+      <button mat-button routerLink="/dashboard/sessions/new">Maak een nieuwe sessie aan</button>
+    </div>
+  </div>
+  <div class="shortcut">
+    <img src="../../../assets/participant_figure.png" alt="add" style="width: 75%; margin-top: 15px">
+    <div class="content">
+      <h2>Deelnemers</h2>
+      <p>Bekijk alle gebruikers dat aan uw sessie hebben deelgenomen en hun antwoorden.</p>
+      <button mat-button routerLink="/dashboard/participants">Ga naar deelnemers</button>
+    </div>
+  </div>
+</div>

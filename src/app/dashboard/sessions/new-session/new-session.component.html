@@ -1,0 +1,201 @@
+<mat-horizontal-stepper linear="true">
+  <!--First step-->
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Naam</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Naam" formControlName="firstCtrl" required (input)="setName($event)">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Paswoord (kan leeg zijn)" formControlName="firstCtrl"(input)="setPassword($event)">
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Volgende</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!--Second step-->
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Vragen selecteren</ng-template>
+      <div style="text-align: center;" *ngIf="!questionsLoaded">
+        <h2>Vragen laden...</h2>
+        <br>
+        <br>
+        <div style="max-width: 75px; margin: auto">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+      <div *ngIf="questionsLoaded">
+        <mat-form-field style="width: 100%">
+          <span matPrefix><mat-icon>search</mat-icon> &nbsp;</span>
+          <input type="text" matInput #searchBar (input)="onChange($event)">
+          <mat-icon matSuffix style="cursor: pointer; color: gray" (click)="clearFilter()">clear</mat-icon>
+        </mat-form-field>
+        <mat-list>
+          <h3 mat-subheader>Geselecteerde vragen</h3>
+          <mat-list-item *ngIf="selectedQuestions.length==0">
+            <p class="warning-message">Geen vragen geselecteerd</p>
+          </mat-list-item>
+          <mat-list-item *ngFor="let question of selectedQuestions">
+            <mat-icon style="cursor: pointer" (click)="removeQuestion(question)">remove_circle_outline</mat-icon><span style="font-size: larger; padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+          </mat-list-item>
+        </mat-list>
+        <mat-list>
+          <h3 mat-subheader>Vragen</h3>
+          <mat-list-item *ngFor="let question of displayQuestions">
+            <!--<mat-checkbox color="primary" (click)="toggleSelected(question)"><span style="font-size: larger">{{question.questionText}}</span></mat-checkbox><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>-->
+            <mat-icon style="cursor: pointer" (click)="selectQuestion(question)">add_circle_outline</mat-icon><span style="font-size: larger; padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="newQuestion">
+          <form (ngSubmit)="onSubmitNewQuestion(f)" #f="ngForm">
+            <table><tr>
+              <td><mat-form-field>
+                <input matInput placeholder="Vraag" name="newQuestionText" ngModel required>
+              </mat-form-field></td>
+              <td><mat-form-field>
+                <input matInput placeholder="Hoogste waarde" name="newQuestionUpperValue" ngModel required>
+              </mat-form-field></td>
+              <td><mat-form-field>
+                <input matInput placeholder="Laagste waarde" name="newQuestionLowerValue" ngModel required>
+              </mat-form-field></td>
+            </tr></table>
+            <p style="color: red; margin-top: -5px" *ngIf="showNewQuestionError"><i>Vul alle velden in.</i></p>
+            <button mat-button color="secondary" (click)="openQuestionForm()"><mat-icon>cancel</mat-icon>&nbsp;Annuleren</button>
+            <button mat-button color="primary" type="submit"> <mat-icon>add</mat-icon>&nbsp;Toevoegen</button>
+          </form>
+        </div>
+        <div *ngIf="!newQuestion">
+          <br>
+          <button mat-button color="primary" (click)="openQuestionForm()"> <mat-icon>add circle outline</mat-icon>&nbsp;Nieuwe vraag toevoegen</button>
+        </div>
+        <br>
+        <div>
+          <button mat-button matStepperPrevious [disabled]="newQuestion">Terug</button>
+          <button mat-button matStepperNext [disabled]="newQuestion">Volgende</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+
+  <!--Third step-->
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Selecteer VAS schaal type</ng-template>
+      <mat-form-field>
+        <mat-select [(value)]="selectedScaleType">
+          <!--<mat-option value="gradient"><img src="assets/inverse_gradientscale.png" class="scales">Inverse gradient</mat-option>
+          <mat-option value="gradient"><img src="assets/gradientscale.png" class="scales">Gradient</mat-option>
+          <mat-option value="line"><img src="assets/sliderscale.png" class="scales" >Line</mat-option>
+          <mat-option value="draw"><img src="assets/drawscale.png" class="scales" >Draw</mat-option>-->
+          <mat-option value="gradient">Gradient</mat-option>
+          <mat-option value="inverse">Inverse gradient</mat-option>
+          <mat-option value="line">Line</mat-option>
+          <mat-option value="draw">Draw</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-checkbox (change)="togglePercentage()">Geef percentage weer</mat-checkbox>
+        <h4>De verschillende schalen:</h4>
+        <p>U kan de schaal kiezen die de gebruiker te zien krijgt bij het invullen van de vragen. De laagste waarde komt links te staan en de hoogste waarde rechts.</p>
+          <h5>Gradient</h5>
+            <img src="assets/gradientscale.png" class="scales" >
+          <h5>Inverse gradient</h5>
+            <img src="assets/inverse_gradientscale.png" class="scales" >
+          <h5>Line</h5>
+            <img src="assets/sliderscale.png" class="scales" >
+          <h5>Draw</h5>
+            <img src="assets/drawscale.png" class="scales" >
+              <p>Op de teken schaal kan een lijn worden getrokken om het antwoord aan te duiden.</p>
+          <h5>Percentage</h5>
+            <p>Het is mogelijk om aan de gebruiker het huidige percentage weer te geven die de slider aangeeft.</p>
+      <br>
+      <br>
+      <div>
+        <button mat-button matStepperPrevious>Terug</button>
+        <button mat-button matStepperNext>Volgende</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!--Fourth step-->
+  <mat-step [stepControl]="fourthFormGroup">
+    <mat-form-field style="width: 100%">
+      <span matPrefix><mat-icon>mail</mat-icon> &nbsp;</span>
+      <input type="email" matInput (keydown)="onKeyDown($event)" #addResearcherBar placeholder="Search researchers by email">
+      <mat-icon matSuffix style="cursor: pointer; color: gray" (click)="addResearcher()">add</mat-icon>
+    </mat-form-field>
+    <p class="warning-message" *ngIf="researcherNotFoundError">Er is geen onderzoeker geregistreerd met dit email adres.</p>
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Onderzoeker toevoegen</ng-template>
+      <mat-list *ngIf="researchers.length>0">
+        <h3 mat-subheader>Onderzoekers</h3>
+        <mat-list-item *ngFor="let researcher of researchers; let i = index">
+          <mat-icon style="color: gray; cursor: pointer" (click)="removeResearcherFromList(i)">remove_circle_outline</mat-icon><span style="padding-left: 10px">{{researcher.firstName}} {{researcher.lastName}}</span><span style="padding-left: 20px; color: gray;">{{researcher.email}}</span><mat-checkbox style="margin-left: 25px" (change)="onToggleAdmin($event, researcher)">Beheerder</mat-checkbox>
+        </mat-list-item>
+      </mat-list>
+      <p class="info-message" *ngIf="researchers.length==0">Geen andere onderzoekers toegevoegd aan deze sessie.</p>
+      <br>
+      <div>
+        <button mat-button matStepperPrevious>Terug</button>
+        <button mat-button matStepperNext>Volgende</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!--Start session-->
+  <mat-step>
+    <ng-template matStepLabel>Sessie starten</ng-template>
+    <mat-list>
+      <h3 mat-subheader>Naam</h3>
+      <mat-list-item>
+        <span style="padding-left: 10px"><h3>{{sessionName}}</h3></span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <h3 mat-subheader>Paswoord</h3>
+      <mat-list-item>
+        <span style="padding-left: 10px" *ngIf="sessionPassword !== ''">{{sessionPassword}}</span>
+        <span style="padding-left: 10px" class="info-message" *ngIf="sessionPassword === ''">Geen passwoord toegekend</span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <h3 mat-subheader>Schaal type</h3>
+      <mat-list-item>
+        <span style="padding-left: 10px">{{selectedScaleType}}</span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <h3 mat-subheader>Geef percentage weer</h3>
+      <mat-list-item>
+        <span style="padding-left: 10px">{{showPercentage}}</span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <h3 mat-subheader>Geselecteerde vragen ({{selectedQuestions.length}})</h3>
+      <mat-list-item *ngIf="selectedQuestions.length==0">
+        <p style="color: red"><i>Geen vragen geselecteerd</i></p>
+      </mat-list-item>
+      <mat-list-item *ngFor="let question of selectedQuestions">
+        <span style="padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list *ngIf="researchers.length>0">
+      <h3 mat-subheader>Onderzoekers ({{researchers.length}})</h3>
+      <mat-list-item *ngFor="let researcher of researchers; let i = index">
+        <span style="padding-left: 10px">{{researcher.firstName}} {{researcher.lastName}}</span><span style="padding-left: 20px; color: gray;">{{researcher.email}}</span>
+      </mat-list-item>
+    </mat-list>
+    <br>
+    <div>
+      <button mat-button (click)="startSession()"><mat-icon>check</mat-icon> Sessie starten</button>
+      <button mat-button (click)="saveSession()"><mat-icon>save</mat-icon> Sessie opslaan</button>
+    </div>
+    <br>
+    <div>
+      <button mat-button matStepperPrevious>Terug</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

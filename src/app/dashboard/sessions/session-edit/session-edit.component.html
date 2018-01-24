@@ -1,0 +1,35 @@
+<div *ngIf="loaded">
+  <h2>Naam</h2>
+  <mat-form-field>
+    <input matInput placeholder="Name" [(ngModel)]="name">
+  </mat-form-field>
+  <h2>Paswoord</h2>
+  <mat-form-field>
+    <input matInput placeholder="Password" [(ngModel)]="password">
+  </mat-form-field>
+  <h2>Slider type</h2>
+  <mat-form-field>
+    <mat-select [(value)]="selectedScaleType">
+      <mat-option value="gradient">Gradient</mat-option>
+      <mat-option value="inverse">Inverse gradient</mat-option>
+      <mat-option value="line">Line</mat-option>
+      <mat-option value="draw">Draw</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-checkbox [(ngModel)]="showPercentage">Toon percentage</mat-checkbox>
+  <h2>Vragen</h2>
+  <mat-list>
+    <mat-list-item *ngFor="let question of selectedQuestions">
+      <mat-icon style="cursor: pointer" (click)="removeQuestion(question)">remove_circle_outline</mat-icon><span style="font-size: larger; padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+    </mat-list-item>
+  </mat-list>
+  <br>
+  <button mat-button (click)="openExistingQuestionDialog()">&nbsp;Kies uit bestaande vragen</button>
+  <button mat-button color="primary" (click)="openNewQuestionDialog()"> <mat-icon>add</mat-icon>&nbsp;Maak een nieuwe vraag aan</button>
+  <br>
+  <br>
+  <button mat-button (click)="cancelChanges()">Annuleren</button>
+  <button mat-button (click)="saveChanges()">Opslaan</button>
+</div>
+<app-not-found *ngIf="notFoundError"></app-not-found>

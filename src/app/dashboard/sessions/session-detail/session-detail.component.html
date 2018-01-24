@@ -1,0 +1,120 @@
+<div *ngIf="loaded">
+  <div *ngIf="isFullScreen" class="fullscreen">
+    <button mat-button class="back-arrow" (click)="toggleFullScreen()">
+      <mat-icon>arrow_back</mat-icon> Terug
+    </button>
+    <div class="fullscreen-details">
+      <img src="../../../../assets/logo.png" alt="logo">
+      <br>
+      <br>
+      <h1>Code:</h1>
+      <h1>{{session.code}}</h1>
+      <br>
+      <div *ngIf="session.password">
+        <h2>Paswoord: </h2>
+        <h2>{{session.password}}</h2>
+      </div>
+    </div>
+  </div>
+  <h1 style="display: inline-block">{{session.name}}</h1>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="toggleFullScreen()">
+      <mat-icon>fullscreen</mat-icon>
+      <span>Fullscreen</span>
+    </button>
+    <button mat-menu-item (click)="openAddResearcherDialog()" *ngIf="isAdmin">
+      <mat-icon>person_add</mat-icon>
+      <span>Onderzoeker toevoegen</span>
+    </button>
+    <button mat-menu-item *ngIf="isAdmin" (click)="editSession()" [disabled]="session.isOpen">
+      <mat-icon>edit</mat-icon>
+      <span>Sessie bewerken</span>
+    </button>
+    <button mat-menu-item *ngIf="isAdmin" (click)="openCopySessionDialog()">
+      <mat-icon>content_copy</mat-icon>
+      <span>Sessie kopiëren</span>
+    </button>
+    <button mat-menu-item *ngIf="isAdmin" (click)="openRemoveSessionDialog()">
+      <mat-icon>delete</mat-icon>
+      <span>Sessie verwijderen</span>
+    </button>
+    <button mat-menu-item style="color: red" *ngIf="session.isOpen && isAdmin" (click)="closeSession()">
+      <mat-icon>close</mat-icon>
+      <span>Sessie sluiten</span>
+    </button>
+    <button mat-menu-item style="color: green" *ngIf="!session.isOpen && isAdmin" (click)="openSession()">
+      <mat-icon>play_circle_outline</mat-icon>
+      <span>Sessie openen</span>
+    </button>
+  </mat-menu>
+
+  <p *ngIf="!session.isConcept">Start datum: {{session.startDate}}</p>
+  <p *ngIf="!session.isConcept && !session.isOpen">Eind datum: {{session.endDate}}</p>
+  <p>Sessie code: {{session.code}}</p>
+  <p *ngIf="session.password">Paswoord: {{session.password}}</p>
+  <p>VAS schaal type: {{session.scaleType}}</p>
+  <p>Percentage weergeven: {{session.showPercentage}}</p>
+  <div *ngIf="!session.isConcept">
+    <p *ngIf="session.isOpen" style="color: green">Deze sessie is momenteel open</p>
+    <p *ngIf="!session.isOpen" style="color: red">Deze sessie is momenteel gesloten</p>
+  </div>
+  <p *ngIf="session.isConcept" style="color: gray;">Deze sessie is nog niet gestart</p>
+  <br>
+  <mat-list>
+    <h3 mat-subheader>Vragen</h3>
+    <mat-list-item *ngFor="let question of questions">
+      <span style="font-size: larger; padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+    </mat-list-item>
+    <br>
+    <h3 mat-subheader>Beheerders</h3>
+    <mat-list-item *ngFor="let admin of admins">
+      <span class="researcher"><span style="padding-left: 10px; cursor: pointer">{{admin.firstName}} {{admin.lastName}}</span><span style="padding-left: 20px; color: gray;">{{admin.email}} <span *ngIf=" emailAddressIsMe(admin.email)">(ik)</span> </span></span>
+      <button *ngIf="!emailAddressIsMe(admin.email) && isAdmin" mat-icon-button [matMenuTriggerFor]="menuAdmin" class="option">
+          <mat-icon>settings</mat-icon>
+        </button>
+      <mat-menu #menuAdmin="matMenu">
+        <button mat-menu-item (click)="removeResearcher(admin, true)">
+          <mat-icon>remove</mat-icon>
+          <span>Verwijderen</span>
+        </button>
+        <button mat-menu-item (click)="changeAdminStatus(admin, true)">
+          <mat-icon>remove_red_eye</mat-icon>
+          <span>Toevoegen aan volgers</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+    <br>
+    <h3 mat-subheader *ngIf="watchers.length>0">Volgers</h3>
+    <mat-list-item *ngFor="let watcher of watchers">
+      <span class="researcher"><span style="padding-left: 10px; cursor: pointer">{{watcher.firstName}} {{watcher.lastName}}</span><span style="padding-left: 20px; color: gray;">{{watcher.email}} <span *ngIf=" emailAddressIsMe(watcher.email)">(ik)</span> </span></span>
+      <button *ngIf="!emailAddressIsMe(watcher.email) && isAdmin" mat-icon-button [matMenuTriggerFor]="menuWatcher" class="option">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menuWatcher="matMenu">
+        <button mat-menu-item (click)="removeResearcher(watcher, false)">
+          <mat-icon>remove</mat-icon>
+          <span>Verwijderen</span>
+        </button>
+        <button mat-menu-item (click)="changeAdminStatus(watcher, false)">
+          <mat-icon>person_add</mat-icon>
+          <span>Toevoegen aan beheerders</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+    <br>
+    <h3 mat-subheader *ngIf="!session.isConcept">Deelnames ({{subjects.length}})</h3>
+    <mat-list-item *ngFor="let subject of subjects" (click)="selectSubject(subject)" style="cursor: pointer">
+      <span style="padding-left: 10px">{{subject.firstName}} {{subject.lastName}}</span><span style="padding-left: 20px; color: gray;">{{subject.email}}</span><mat-icon style="padding-left: 20px; color: gray;">chevron_right</mat-icon>
+    </mat-list-item>
+    <br>
+    <button mat-button *ngIf="!session.isConcept && subjects.length>0" (click)="getCSVFile()">
+      <mat-icon>file_download</mat-icon>
+      <a>Download CSV File</a>
+    </button>
+  </mat-list>
+</div>
+<app-not-found *ngIf="notFoundError"></app-not-found>

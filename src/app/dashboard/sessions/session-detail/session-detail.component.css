@@ -1,0 +1,47 @@
+.fullscreen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: white;
+  z-index: 2;
+  text-align: center;
+}
+
+.back-arrow {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  z-index: 2;
+}
+
+.fullscreen-details {
+  margin-top: 150px;
+  font-size: 150%;
+}
+
+.fullscreen-details img {
+  width: 10%;
+}
+
+.option {
+  display: none;
+}
+
+.researcher:hover + .option {
+  display: inline;
+}
+
+.option {
+  color: gray;
+}
+
+.option:hover {
+  display: inline;
+}
+
+.GoTo{
+  text-decoration: none;
+  color: black;
+}

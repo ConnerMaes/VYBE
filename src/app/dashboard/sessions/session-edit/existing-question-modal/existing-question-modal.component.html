@@ -1,0 +1,11 @@
+<div>
+  <h2>Vragen</h2>
+  <mat-list>
+    <mat-list-item *ngFor="let question of data.questions">
+      <mat-checkbox (change)="onToggleQuestion(question)"></mat-checkbox><span style="font-size: larger; padding-left: 10px">{{question.questionText}}</span><span style="padding-left: 30px; color: gray">{{question.upperValue}} - {{question.lowerValue}}</span>
+    </mat-list-item>
+  </mat-list>
+  <p *ngIf="data.questions.length == 0" class="info">Geen vragen beschikbaar.</p>
+  <button mat-button mat-dialog-close>Annuleren</button>
+  <button mat-button (click)="onReturn()"><mat-icon>save</mat-icon>Opslaan</button>
+</div>

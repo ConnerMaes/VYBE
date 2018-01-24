@@ -1,0 +1,15 @@
+th {
+  padding-right: 200px;
+}
+
+th:first-child {
+  padding-right: 50px;
+}
+
+th:nth-child(2) {
+  padding-right: 250px;
+}
+
+td {
+  padding-top: 15px;
+}

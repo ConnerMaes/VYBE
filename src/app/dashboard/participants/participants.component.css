@@ -1,0 +1,15 @@
+th {
+  padding-right: 150px;
+}
+
+th:nth-last-child(2) {
+  padding-right: 10px;
+}
+
+td {
+  padding-top: 15px;
+}
+
+td:last-child {
+  cursor: pointer;
+}

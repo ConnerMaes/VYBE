@@ -1,0 +1,23 @@
+<div [ngClass]="cardClass">
+  <div [ngClass]="contentClass">
+    <img src="../../assets/logo.png" alt="logo" class="logo">
+    <form (ngSubmit)="onLogin(f)" #f="ngForm">
+      <mat-form-field>
+        <mat-icon matPrefix>mail_outline</mat-icon>
+        <input type="email" matInput placeholder="email" name="email" ngModel>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <input type="password" matInput placeholder="password" name="password" ngModel>
+      </mat-form-field>
+      <br>
+      <p class="error" *ngIf="wrongEmailPasswordError">Het email adres of paswoord komt niet overeen.</p>
+      <p class="error" *ngIf="serverError">Er is een probleem met de server. Probeer het later opnieuw.</p>
+      <br>
+      <button mat-button type="submit" [disabled]="loginButtonDisabled">Login</button>
+    </form>
+  </div>
+</div>
+<p class="bottom-text" [ngClass]="contentClass">Nog geen account? <a (click)="goToSignup()">Klik hier</a></p>
+<a class="bottom-text forgot-password" [ngClass]="contentClass" (click)="openResetPasswordModal()">Paswoord vergeten</a>

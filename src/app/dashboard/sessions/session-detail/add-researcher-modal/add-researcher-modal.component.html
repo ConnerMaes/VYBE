@@ -1,0 +1,16 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <h2 mat-dialog-title>Onderzoeker toevoegen</h2>
+  <mat-dialog-content>Geef het email adres in van de onderzoeker die u wenst toe te voegen.</mat-dialog-content>
+  <br>
+  <mat-form-field style="width: 100%">
+    <input matInput placeholder="Email" ngModel email name="email">
+  </mat-form-field>
+  <mat-radio-group ngModel name="isAdmin">
+    <mat-radio-button checked="true" value=true>Beheerder</mat-radio-button>
+    <mat-radio-button value=false style="margin-left: 25px">Volger</mat-radio-button>
+  </mat-radio-group>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Annuleren</button>
+    <button mat-button type="submit">Toevoegen</button>
+  </mat-dialog-actions>
+</form>

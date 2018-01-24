@@ -1,0 +1,28 @@
+<h1>Recente sessies</h1>
+<mat-form-field style="width: 100%">
+    <span matPrefix><mat-icon>search</mat-icon> &nbsp;</span>
+    <input type="text" matInput #searchBar (input)="onChange($event)">
+    <mat-icon matSuffix style="cursor: pointer; color: gray" (click)="clearFilter()">clear</mat-icon>
+  </mat-form-field>
+<table>
+
+  <tr>
+    <th>Naam</th>
+    <th>Code</th>
+    <th>Paswoord</th>
+    <th>Eind datum</th>
+    <th></th>
+  </tr>
+  <br>
+  <tr *ngFor="let session of displaySessions" (click)="goToSessionDetail(session)">
+    <td>{{session.name}}</td>
+    <td>{{session.code}}</td>
+    <td *ngIf="session.password">{{session.password}}</td>
+    <td *ngIf="!session.password">Geen paswoord toegekend</td>
+    <td *ngIf="!session.isOpen">{{session.endDate}}</td>
+    <td *ngIf="session.isOpen">Open</td>
+    <td><mat-icon>chevron_right</mat-icon></td>
+  </tr>
+</table>
+<p *ngIf="sessions.length == 0" class="info">Er zijn momenteel geen sessies om weer te geven.</p>
+

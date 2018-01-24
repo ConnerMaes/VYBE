@@ -1,0 +1,146 @@
+.navbar {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  margin: auto;
+  border-bottom:4px solid #49AAE2;
+}
+
+.navbar .logo {
+  width: 75px;
+  margin-left: 50%;
+  margin-top: 20px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f6;
+  overflow-x: hidden;
+  padding-top: 20px;
+  box-shadow: 0px 0px 20px gray;
+}
+
+.sidenav-black {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2E2E2E;
+  overflow-x: hidden;
+}
+
+.sidenav-image {
+  width: 100px;
+  margin-left: 50px;
+  margin-bottom: 30px;
+  cursor: pointer
+}
+
+.sidenav-profile {
+  width: 100px;
+  margin-left: 50px;
+  margin-bottom: 15px;
+  border-radius: 50%;
+}
+
+.sidenav .active-tab {
+  border-right: 4px solid cornflowerblue;
+  background: #ddd;
+}
+
+.sidenav-black .active-tab {
+  border-right: 4px solid #49AAE2;
+  border-left: 4px solid #49AAE2;
+  color: white !important;
+}
+
+.sidenav mat-list mat-list-item mat-icon {
+  padding-right: 10px;
+}
+
+.sidenav mat-list mat-list-item {
+  cursor: pointer;
+  color: gray;
+}
+
+.sidenav-black mat-list {
+  padding-top: 80px;
+}
+
+.sidenav-black mat-list mat-list-item mat-icon {
+  padding-right: 10px;
+}
+
+.sidenav-black mat-list mat-list-item {
+  cursor: pointer;
+  color: gray;
+}
+
+.sidenav-black mat-list mat-list-item:hover {
+  background: #404040;
+}
+
+img:focus {
+  outline: none;
+  border: 0;
+}
+
+.mat-list-item-focus {
+  outline: none;
+}
+
+.content {
+  padding-left: 150px;
+  margin-top: 50px;
+  padding-top: 60px;
+}
+
+.content-inside {
+  width: 60%;
+  margin: auto;
+}
+
+.filler {
+  height: 100%;
+  background: white;
+}
+
+.greeting-header {
+  background: #3D3D3D;
+  border-bottom: 2px solid gray;
+  height: 60px;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  text-align: center;
+  color: white;
+}
+
+.greeting-header h4 {
+  padding-top: 20px;
+  font-family: Arial;
+  font-style: normal;
+}
+
+.close-button {
+  color: gray;
+  width: 100%;
+  text-align: right;
+}
+
+.close-button mat-icon {
+  margin-top: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}

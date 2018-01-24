@@ -1,0 +1,24 @@
+<h1>Vragen</h1>
+<button mat-button color="primary" (click)="openNewQuestionDialog()"> <mat-icon>add</mat-icon>&nbsp;Maak een nieuwe vraag aan</button>
+<br>
+<br>
+<mat-form-field style="width: 100%">
+  <span matPrefix><mat-icon>search</mat-icon> &nbsp;</span>
+  <input type="text" matInput #searchBar (input)="onChange($event)">
+  <mat-icon matSuffix style="cursor: pointer; color: gray" (click)="clearFilter()">clear</mat-icon>
+</mat-form-field>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Vraag</th>
+    <th>Hoogste waarde</th>
+    <th>Laagste waarde</th>
+  </tr>
+  <br>
+  <tr *ngFor="let question of displayQuestions">
+    <td>{{question.questionID}}</td>
+    <td>{{question.questionText}}</td>
+    <td>{{question.upperValue}}</td>
+    <td>{{question.lowerValue}}</td>
+  </tr>
+</table>

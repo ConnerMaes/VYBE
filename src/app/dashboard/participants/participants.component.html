@@ -1,0 +1,19 @@
+<h1>Deelnemers</h1>
+<br>
+<br>
+<table>
+  <tr>
+    <th>Naam</th>
+    <th>Leeftijd</th>
+    <th>Ziekte</th>
+    <th></th>
+  </tr>
+  <br>
+  <tr *ngFor="let subject of subjects">
+    <td>{{subject.firstName}} {{subject.lastName}}</td>
+    <td>{{getAge(subject.birthDate)}}</td>
+    <td>{{subject.illness}}</td>
+    <td (click)="selectSubject(subject)"><mat-icon>chevron_right</mat-icon></td>
+  </tr>
+</table>
+<p *ngIf="subjects.length == 0" class="info">Er zijn momenteel geen personen weer te geven.</p>

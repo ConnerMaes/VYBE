@@ -1,0 +1,31 @@
+<h2>Naam</h2>
+<mat-form-field>
+  <input type="text" matInput placeholder="Voornaam" [(ngModel)]="firstName">
+</mat-form-field>
+<br>
+<mat-form-field>
+  <input type="text" matInput placeholder="Achternaam" [(ngModel)]="lastName">
+</mat-form-field>
+<br>
+<button mat-button type="submit" (click)="onChangeName()"><mat-icon>save</mat-icon> Veranderingen opslaan</button>
+<br>
+<h2>Paswoord resetten</h2>
+<p>U zal een mail ontvangen met een link naar een Auth0 pagina waar u uw paswoord kan resetten.</p>
+<button mat-button (click)="resetPassword()"><mat-icon>sync</mat-icon> Reset paswoord</button>
+<br>
+<br>
+<h2>Onderzoekers uitnodigen</h2>
+<p>Om een account aan te maken moet men uitgenodigd worden. Voer de email adressen in van de personen die u wil uitnodigen.</p>
+<div *ngIf="invites.length > 0">
+  <h4>Uitnodigingen:</h4>
+  <span *ngFor="let invite of invites; let i = index" class="invite">
+  {{invite}} <span class="close" (click)="onRemoveInvite(i)">X</span>
+  </span>
+  <br>
+  <button mat-button (click)="sendInvitations()">Uitnodigingen verzenden</button>
+</div>
+<br>
+<mat-form-field style="width: 100%">
+  <input type="text" matInput placeholder="Uitnodigingen" (keyup.enter)="onAddInvite($event)">
+</mat-form-field>
+<p *ngIf="wrongEmail !== ''" class="error">{{wrongEmail}} is geen aanvaarbaar email adres.</p>

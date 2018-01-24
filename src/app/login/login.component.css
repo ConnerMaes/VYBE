@@ -1,0 +1,89 @@
+.background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #49AAE2;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+
+.card {
+  height: 500px;
+  width: 800px;
+  box-shadow: 0px 0px 15px gray;
+  margin: auto;
+  margin-top: 100px;
+  text-align: center;
+  background: white;
+  border-radius: 10px;
+}
+
+.logo {
+  width: 15%;
+  margin-top: 75px;
+}
+
+.bottom-text {
+  font-size: smaller;
+  text-align: center;
+  color: white;
+  margin-top: 25px;
+}
+
+.forgot-password {
+  display: block;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+mat-icon {
+  margin-right: 15px;
+}
+
+form {
+  padding-top: 50px;
+  margin: auto;
+  width: 60%;
+}
+
+form mat-form-field {
+  width: 100%;
+}
+
+form button {
+  width: 100%;
+  background: #49AAE2;
+  color: white;
+}
+
+.animation-larger {
+  height: 800px;
+  animation-name: larger;
+  animation-duration: 1s;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+@keyframes larger {
+  from {height: 500px}
+  to {height: 800px}
+}

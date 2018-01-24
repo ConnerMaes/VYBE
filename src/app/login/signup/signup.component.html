@@ -1,0 +1,37 @@
+<div [ngClass]="cardClass">
+  <div [ngClass]="contentClass">
+    <h1>Nieuwe account</h1>
+    <div class="warning">
+      <mat-icon>error_outline</mat-icon>
+      <p>Er kan enkel een nieuwe account aangemaakt worden als je uitgenodigd bent.</p>
+    </div>
+    <form (ngSubmit)="onSignup(f)" #f="ngForm">
+      <mat-form-field>
+        <input type="email" matInput placeholder="email" required email name="email" ngModel>
+      </mat-form-field>
+      <br>
+      <p *ngIf="inviteError" class="error">Er is geen invite beschikbaar op dit email adres.</p>
+      <mat-form-field>
+        <input type="password" matInput placeholder="paswoord" required name="password" ngModel>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input type="password" matInput placeholder="herhaal paswoord" required name="passwordrpt" ngModel>
+      </mat-form-field>
+      <br>
+      <p *ngIf="passwordMatchError" class="error">Paswoorden zijn niet gelijk.</p>
+      <mat-form-field>
+        <input type="text" matInput placeholder="voornaam" required name="firstName" ngModel>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input type="text" matInput placeholder="achternaam" required name="lastName" ngModel>
+      </mat-form-field>
+      <br>
+      <br>
+      <!--<mat-checkbox required name="agree" ngModel>I have read and agree the <a href="https://www.w3schools.com" target="_blank">Terms & conditions</a></mat-checkbox>-->
+      <button mat-button type="submit">Maak account aan</button>
+    </form>
+  </div>
+</div>
+<a class="back-link" [ngClass]="contentClass" (click)="goBackToLogin()">Terug naar login</a>

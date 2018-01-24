@@ -1,0 +1,11 @@
+th {
+    padding-right: 150px;
+  }
+  
+  td {
+    padding-top: 15px;
+  }
+  
+  td:hover {
+    cursor: pointer;
+  }
